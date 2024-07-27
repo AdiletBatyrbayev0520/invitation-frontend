@@ -109,7 +109,7 @@ function App() {
         e.preventDefault();
         axios.post('/rsvp', guest)
             .then(response => {
-                alert('RSVP submitted successfully!');
+                
             })
             .catch(error => {
                 console.error('There was an error submitting the RSVP!', error);
