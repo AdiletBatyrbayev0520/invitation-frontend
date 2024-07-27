@@ -1,38 +1,185 @@
+/* Основные стили */
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  background: linear-gradient(to bottom, #f0f4c3, #c8e6c9);
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #555555;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  color: #4CAF50;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  font-size: 3rem;
+  color: #4CAF50;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+p {
+  font-size: 1.2rem;
+  color: #555555;
+  margin: 10px 0;
+}
+
+/* Стили формы */
+form {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  display: inline-block;
+  text-align: left;
+  width: 100%;
+  max-width: 500px;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+  color: #555555;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Стили слайд-шоу */
+.slideshow-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.slideshow-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+/* Стили карты */
+.map-container {
+  width: 100%;
+  height: 400px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Анимация буква за буквой */
+.letter {
+  display: inline-block;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Медиа-запросы для адаптивного дизайна */
+@media (max-width: 768px) {
+  .App {
+    padding: 10px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .App-header {
+    padding: 10px;
   }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  form {
+    padding: 10px;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+  }
+
+  button {
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    padding: 5px;
+  }
+
+  .App-header {
+    padding: 5px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
+
+  form {
+    padding: 5px;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: calc(100% - 18px);
+    padding: 6px;
+  }
+
+  button {
+    padding: 6px 12px;
+  }
+}
+
+/* Скрываем второй элемент с классом .map-container */
+.map-container:nth-of-type(1) {
+  display: none;
 }

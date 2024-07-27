@@ -4,14 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Создаем корневой элемент для рендеринга приложения
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Рендерим приложение внутри StrictMode для выявления потенциальных проблем
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Функция для измерения производительности приложения
+reportWebVitals(console.log);
+
+// Включение отчетности о производительности (по желанию)
+// Вы можете заменить console.log на отправку данных в аналитику
+// Подробнее: https://bit.ly/CRA-vitals
