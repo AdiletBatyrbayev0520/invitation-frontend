@@ -69,13 +69,13 @@ function App() {
         if (mapContainer.current) {
             load().then((mapglAPI) => {
                 const map = new mapglAPI.Map(mapContainer.current, {
-                    center: [76.895250, 43.238293],
+                    center: [77.02221, 43.292448],
                     zoom: 15,
                     key: '63c4c395-c8e2-4581-b08f-3f33abb7e2cc',
                 }); 
 
                 new mapglAPI.Marker(map, {
-                    coordinates: [76.895250, 43.238293],
+                    coordinates: [77.02221, 43.292448],
                 });
             }).catch(error => {
                 console.error('Error loading 2GIS MapGL:', error);
@@ -114,7 +114,8 @@ function App() {
             .catch(error => {
                 console.error('There was an error submitting the RSVP!', error);
             });
-        console.log(guest)
+            console.log(guest)
+            setGuest({ fullname: '', mobile_number: '+7', willAttend: false, numberOfPeople: '' })
     };
 
     const animateText = (text) => {
