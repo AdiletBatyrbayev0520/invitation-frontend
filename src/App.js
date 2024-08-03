@@ -155,7 +155,6 @@ function App() {
           <div id="animated-text"></div>
           <p>{`Той салтанаты: ${invitation.date}`}</p>
           <p>{`сағ ${invitation.time}`}</p>
-          <p>{`Мекен-жайымыз: ${invitation.location}`}</p>
           <p>{`Той иелері: ${invitation.hosts}`}</p>
         </header>
         <audio src={backgroundMusic} ref={audioRef} loop />
@@ -193,7 +192,7 @@ function App() {
                 <button className='submit' type="submit">Отправить</button>
               </form>
               <div className="map-info">
-                <p>Мекен-жайымыз: <a href="https://2gis.kz/almaty/geo/70000001041557578" target="_blank" rel="noopener noreferrer">с. Бесағаш, ул. Райымбек 145 А 'Ханшайым' мейрамханасы</a></p>
+                <p>Мекен-жайымыз: <a href="https://2gis.kz/almaty/geo/70000001041557578" target="_blank" rel="noopener noreferrer">{invitation.location}</a></p>
               </div>
               <Map />
             </div>
