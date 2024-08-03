@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import 'react-phone-input-2/lib/style.css';
 import PhoneInput from 'react-phone-input-2';
@@ -38,6 +38,8 @@ function App() {
     const [guest, setGuest] = useState({ fullname: '', mobile_number: '', willAttend: false, numberOfPeople: '' });
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [fadeProp, setFadeProp] = useState({ fade: 'fade-in' });
+    const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+    const audioRef = useRef(null); // Use a ref to access the audio element
 
     const [width, height] = useWindowSize();
     const images = [img1, img2, img3, img4, img5, img6];
@@ -116,6 +118,13 @@ function App() {
         }
     };
 
+    const handlePlayMusic = () => {
+        if (audioRef.current) {
+            audioRef.current.play();
+            setIsMusicPlaying(true);
+        }
+    };
+
     return (
         <Router>
             <div className="App">
@@ -126,7 +135,6 @@ function App() {
                     recycle={true}
                     gravity={0.2}
                 />
-                <audio src={backgroundMusic} autoPlay loop />
                 <header className="App-header">
                     <img src={img60} className='logo_60' alt="Logo"/>
                     <div className="slideshow-container">
@@ -137,7 +145,11 @@ function App() {
                     <p>{`сағ ${invitation.time}`}</p>
                     <p>{`Мекен-жайымыз: ${invitation.location}`}</p>
                     <p>{`Той иелері: ${invitation.hosts}`}</p>
+                    {!isMusicPlaying && (
+                        <button onClick={handlePlayMusic} className="play-music-button">Play Music</button>
+                    )}
                 </header>
+                <audio src={backgroundMusic} ref={audioRef} loop />
                 <Routes>
                     <Route path="/" element={
                         <div>

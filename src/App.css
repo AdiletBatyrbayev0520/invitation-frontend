@@ -217,6 +217,23 @@ button:hover {
   color: #4CAF50;
 }
 
+.play-music-button {
+  background-color: #0077ffd0;
+  color: #ffffff;
+  font-style: italic;
+  font-weight: bolder;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.play-music-button:hover {
+  background-color: #0077ff;
+}
+
+
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
