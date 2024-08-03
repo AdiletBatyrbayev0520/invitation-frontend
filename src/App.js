@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'react-phone-input-2/lib/style.css';
 import PhoneInput from 'react-phone-input-2';
@@ -9,11 +9,15 @@ import img3 from './images/3.jpg';
 import img4 from './images/4.jpg';
 import img5 from './images/5.jpg';
 import img6 from './images/6.jpg';
+import img60 from './images/60.jpg';
 import Confetti from 'react-confetti';
-import { load } from '@2gis/mapgl';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import InvitationCard from './InvitationCard';
+import Map from './Map';
+import BottomAppBar from './BottomAppBar';
 
-axios.defaults.baseURL='https://invitation-backend-production.up.railway.app';
-// axios.defaults.baseURL='http://localhost:4000'
+axios.defaults.baseURL = 'http://localhost:4000';
+
 function useWindowSize() {
     const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
     useEffect(() => {
@@ -32,12 +36,9 @@ function App() {
     const [invitation, setInvitation] = useState({});
     const [guest, setGuest] = useState({ fullname: '', mobile_number: '', willAttend: false, numberOfPeople: '' });
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [fadeProp, setFadeProp] = useState({
-        fade: 'fade-in'
-    });
+    const [fadeProp, setFadeProp] = useState({ fade: 'fade-in' });
 
     const [width, height] = useWindowSize();
-    const mapContainer = useRef(null);
     const images = [img1, img2, img3, img4, img5, img6];
 
     useEffect(() => {
@@ -51,37 +52,15 @@ function App() {
             });
 
         const imageInterval = setInterval(() => {
-            setFadeProp({
-                fade: 'fade-out'
-            });
+            setFadeProp({ fade: 'fade-out' });
             setTimeout(() => {
                 setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-                setFadeProp({
-                    fade: 'fade-in'
-                });
+                setFadeProp({ fade: 'fade-in' });
             }, 500); // Fade out duration
         }, 3500); // Total duration including fade out
 
         return () => clearInterval(imageInterval);
     }, []);
-
-    useEffect(() => {
-        if (mapContainer.current) {
-            load().then((mapglAPI) => {
-                const map = new mapglAPI.Map(mapContainer.current, {
-                    center: [77.02221, 43.292448],
-                    zoom: 15,
-                    key: '63c4c395-c8e2-4581-b08f-3f33abb7e2cc',
-                }); 
-
-                new mapglAPI.Marker(map, {
-                    coordinates: [77.02221, 43.292448],
-                });
-            }).catch(error => {
-                console.error('Error loading 2GIS MapGL:', error);
-            });
-        }
-    }, [mapContainer]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -108,14 +87,12 @@ function App() {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('/rsvp', guest)
-            .then(response => {
-                
-            })
+            .then(response => {})
             .catch(error => {
                 console.error('There was an error submitting the RSVP!', error);
             });
-            console.log(guest)
-            setGuest({ fullname: '', mobile_number: '+7', willAttend: false, numberOfPeople: '' })
+        console.log(guest);
+        setGuest({ fullname: '', mobile_number: '+7', willAttend: false, numberOfPeople: '' });
     };
 
     const animateText = (text) => {
@@ -139,61 +116,71 @@ function App() {
     };
 
     return (
-        <div className="App">
-            <Confetti
-                width={width}
-                height={height}
-                numberOfPieces={200}
-                recycle={true}
-                gravity={0.2} // Slower effect
-            />
-            <header className="App-header">
-                <h1>{invitation.title}</h1>
-                <div className="slideshow-container">
-                    <img src={images[currentImageIndex]} alt="Slideshow" className={`slideshow-image ${fadeProp.fade}`} />
-                </div>
-                <div id="animated-text"></div>
-                <p>{`Той салтанаты: ${invitation.date}`}</p>
-                <p>{`сағ ${invitation.time}`}</p>
-                <p>{`Мекен-жайымыз: ${invitation.location}`}</p>
-                <p>{`Той иелері: ${invitation.hosts}`}</p>
-            </header>
-            <form onSubmit={handleSubmit}>
-                <h2>Сауалнама(анкета)</h2>
-                <label>
-                    Аты-жөні:
-                    <input type="text" name="fullname" value={guest.fullname} onChange={handleInputChange} required />
-                </label>
-                <label>
-                    Телефон нөмірі:
-                    <PhoneInput
-                        country={'kz'}
-                        value={guest.mobile_number}
-                        onChange={handlePhoneChange}
-                        inputProps={{
-                            name: 'mobile_number',
-                            required: true,
-                            autoFocus: true
-                        }}
-                        onlyCountries={['kz']}
-                        countryCodeEditable={false}
-                    />
-                </label>
-                <label>
-                    Қатысуы(буду присутствовать):
-                    <input type="checkbox" name="willAttend" checked={guest.willAttend} onChange={handleCheckboxChange} />
-                </label>
-                <label>
-                    Адам саны(количество персон):
-                    <input type="number" name="numberOfPeople" value={guest.numberOfPeople} onChange={handleInputChange} required />
-                </label>
-                <button type="submit">Отправить</button>
-            </form>
-            <div className="map-info">
-                <p>Location: <a href="https://2gis.kz/almaty/geo/70000001041557578" target="_blank" rel="noopener noreferrer">https://2gis.kz/almaty/geo/70000001041557578</a></p>
+        <Router>
+            <div className="App">
+                <Confetti
+                    width={width}
+                    height={height}
+                    numberOfPieces={200}
+                    recycle={true}
+                    gravity={0.2}
+                />
+                <header className="App-header">
+                    <img src={img60} className='logo_60' alt="Logo"/>
+                    <div className="slideshow-container">
+                        <img src={images[currentImageIndex]} alt="Slideshow" className={`slideshow-image ${fadeProp.fade}`} />
+                    </div>
+                    <div id="animated-text"></div>
+                    <p>{`Той салтанаты: ${invitation.date}`}</p>
+                    <p>{`сағ ${invitation.time}`}</p>
+                    <p>{`Мекен-жайымыз: ${invitation.location}`}</p>
+                    <p>{`Той иелері: ${invitation.hosts}`}</p>
+                </header>
+                <Routes>
+                    <Route path="/" element={
+                        <div>
+                            <form onSubmit={handleSubmit}>
+                                <h2>Сауалнама(анкета)</h2>
+                                <label>
+                                    Аты-жөні:
+                                    <input type="text" name="fullname" value={guest.fullname} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Телефон нөмірі:
+                                    <PhoneInput
+                                        country={'kz'}
+                                        value={guest.mobile_number}
+                                        onChange={handlePhoneChange}
+                                        inputProps={{
+                                            name: 'mobile_number',
+                                            required: true,
+                                            autoFocus: true
+                                        }}
+                                        onlyCountries={['kz']}
+                                        countryCodeEditable={false}
+                                    />
+                                </label>
+                                <label>
+                                    Қатысуы(буду присутствовать):
+                                    <input type="checkbox" name="willAttend" checked={guest.willAttend} onChange={handleCheckboxChange} />
+                                </label>
+                                <label>
+                                    Адам саны(количество персон):
+                                    <input type="number" name="numberOfPeople" value={guest.numberOfPeople} onChange={handleInputChange} required />
+                                </label>
+                                <button className='submit' type="submit">Отправить</button>
+                            </form>
+                            <div className="map-info">
+                                <p>Мекен-жайымыз: <a href="https://2gis.kz/almaty/geo/70000001041557578" target="_blank" rel="noopener noreferrer">с. Бесағаш, ул. Райымбек 145 А 'Ханшайым' мейрамханасы</a></p>
+                            </div>
+                            <Map />
+                        </div>
+                    } />
+                    <Route path="/invitation-card" element={<InvitationCard />} />
+                </Routes>
+                <BottomAppBar />
             </div>
-            <div ref={mapContainer} className="map-container"></div>
-        </div>
+        </Router>
     );
 }
 
