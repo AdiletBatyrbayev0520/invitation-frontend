@@ -39,31 +39,34 @@ function App() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [fadeProp, setFadeProp] = useState({ fade: 'fade-in' });
     const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+    const [isOverlayVisible, setIsOverlayVisible] = useState(true);
     const audioRef = useRef(null); // Use a ref to access the audio element
 
     const [width, height] = useWindowSize();
     const images = [img1, img2, img3, img4, img5, img6];
 
     useEffect(() => {
-        axios.get('/invitation')
-            .then(response => {
-                setInvitation(response.data);
-                animateText(response.data.content);
-            })
-            .catch(error => {
-                console.error('There was an error fetching the invitation!', error);
-            });
+        if (isMusicPlaying) {
+            axios.get('/invitation')
+                .then(response => {
+                    setInvitation(response.data);
+                    animateText(response.data.content);
+                })
+                .catch(error => {
+                    console.error('There was an error fetching the invitation!', error);
+                });
 
-        const imageInterval = setInterval(() => {
-            setFadeProp({ fade: 'fade-out' });
-            setTimeout(() => {
-                setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-                setFadeProp({ fade: 'fade-in' });
-            }, 500); // Fade out duration
-        }, 3500); // Total duration including fade out
+            const imageInterval = setInterval(() => {
+                setFadeProp({ fade: 'fade-out' });
+                setTimeout(() => {
+                    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+                    setFadeProp({ fade: 'fade-in' });
+                }, 500); // Fade out duration
+            }, 3500); // Total duration including fade out
 
-        return () => clearInterval(imageInterval);
-    }, []);
+            return () => clearInterval(imageInterval);
+        }
+    }, [isMusicPlaying]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -122,19 +125,28 @@ function App() {
         if (audioRef.current) {
             audioRef.current.play();
             setIsMusicPlaying(true);
+            setIsOverlayVisible(false);
         }
     };
 
     return (
         <Router>
-            <div className="App">
-                <Confetti
-                    width={width}
-                    height={height}
-                    numberOfPieces={200}
-                    recycle={true}
-                    gravity={0.2}
-                />
+            {isOverlayVisible && (
+                <div className="overlay">
+                    <button onClick={handlePlayMusic} className="play-music-button">Нажмите</button>
+                </div>
+            )}
+            <div className={`App ${isOverlayVisible ? 'blurred' : ''}`}>
+
+                {isMusicPlaying && (
+                    <Confetti
+                        width={width}
+                        height={height}
+                        numberOfPieces={200}
+                        recycle={true}
+                        gravity={0.2}
+                    />
+                )}
                 <header className="App-header">
                     <img src={img60} className='logo_60' alt="Logo"/>
                     <div className="slideshow-container">
@@ -145,9 +157,6 @@ function App() {
                     <p>{`сағ ${invitation.time}`}</p>
                     <p>{`Мекен-жайымыз: ${invitation.location}`}</p>
                     <p>{`Той иелері: ${invitation.hosts}`}</p>
-                    {!isMusicPlaying && (
-                        <button onClick={handlePlayMusic} className="play-music-button">Play Music</button>
-                    )}
                 </header>
                 <audio src={backgroundMusic} ref={audioRef} loop />
                 <Routes>
