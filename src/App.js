@@ -178,8 +178,8 @@ function App() {
                     } />
                     <Route path="/invitation-card" element={<InvitationCard />} />
                 </Routes>
-                <BottomAppBar />
             </div>
+            <BottomAppBar />
         </Router>
     );
 }
