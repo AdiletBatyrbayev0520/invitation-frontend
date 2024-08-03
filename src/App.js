@@ -10,6 +10,7 @@ import img4 from './images/4.jpg';
 import img5 from './images/5.jpg';
 import img6 from './images/6.jpg';
 import img60 from './images/60.jpg';
+import backgroundMusic from './audio/background.mp3'; // Import the audio file
 import Confetti from 'react-confetti';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import InvitationCard from './InvitationCard';
@@ -125,6 +126,7 @@ function App() {
                     recycle={true}
                     gravity={0.2}
                 />
+                <audio src={backgroundMusic} autoPlay loop />
                 <header className="App-header">
                     <img src={img60} className='logo_60' alt="Logo"/>
                     <div className="slideshow-container">
