@@ -16,7 +16,7 @@ import InvitationCard from './InvitationCard';
 import Map from './Map';
 import BottomAppBar from './BottomAppBar';
 
-axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = 'https://invitation-backend-production.up.railway.app';
 
 function useWindowSize() {
     const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
