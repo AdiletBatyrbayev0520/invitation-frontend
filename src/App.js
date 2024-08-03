@@ -176,8 +176,7 @@ function App() {
                     onChange={handlePhoneChange}
                     inputProps={{
                       name: 'mobile_number',
-                      required: true,
-                      autoFocus: true
+                      required: true
                     }}
                     onlyCountries={['kz']}
                     countryCodeEditable={false}
